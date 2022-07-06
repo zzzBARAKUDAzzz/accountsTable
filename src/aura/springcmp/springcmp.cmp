@@ -1,0 +1,23 @@
+<aura:component controller="DatatableHandler" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId" access="global" >
+    <aura:attribute name="selectRecordName" type="string"/>
+    <aura:attribute name="results" type="Object"/>
+    <aura:attribute name="mycolumns" type="List"/>       
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>    
+    <aura:attribute name="isLoading" type="Boolean" default="false" />
+    <aura:if isTrue="{! v.isLoading }">
+        <lightning:spinner alternativeText="Loading" />
+    </aura:if> 
+    <lightning:layout multipleRows="true" horizontalAlign="center">
+        <lightning:layoutItem padding="around-small" size="12">  
+            <lightning:input class="slds-m-bottom_medium" onchange="{! c.searchText }" name="searchText"  label="{!v.Label}" value="{!v.selectRecordName}" placeholder="Search here..."/> 
+            <!--/lightning:layoutItemlightning:button variant="success" label="Search" title="Success" onchange="{! c.searchText }"-->
+            
+            <lightning:datatable keyField="id" data="{!v.results}"
+                                 columns="{!v.mycolumns}"
+                                 resizeColumnDisabled="true"
+                                 hideCheckboxColumn="true"
+                                 onrowaction="{!c.handleRowAction}"
+                                 />            
+        </lightning:layoutItem>       
+    </lightning:layout>
+ </aura:component>
